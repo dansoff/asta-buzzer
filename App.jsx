@@ -30,10 +30,18 @@ useEffect(() => {
   const buzzRef = ref(db, "buzz/last");
   const unsubscribe = onValue(buzzRef, (snapshot) => {
     if (snapshot.exists()) {
-      setLastBuzz(snapshot.val());
+      const newBuzz = snapshot.val();
+      setLastBuzz((prevBuzz) => {
+        if (!prevBuzz || prevBuzz.timestamp !== newBuzz.timestamp) {
+          // Solo reproducir si es un buzz nuevo
+          const audio = new Audio("/like.wav");
+          audio.play();
+        }
+        return newBuzz;
+      });
     }
   });
-  return () => unsubscribe(); // Limpieza si el componente se desmonta
+  return () => unsubscribe();
 }, []);
 
   const handleBuzz = async () => {
