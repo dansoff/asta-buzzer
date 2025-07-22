@@ -59,6 +59,26 @@ useEffect(() => {
     await set(buzzRef, buzzData);
     await push(historyRef, buzzData);
   };
+  
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+  const historyRef = ref(db, "buzz/history");
+
+  onValue(historyRef, (snapshot) => {
+    const entries = [];
+    snapshot.forEach((child) => {
+      entries.push(child.val());
+    });
+
+    // Ordenar por timestamp descendente y tomar los 5 más recientes
+    const lastFive = entries
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .slice(0, 5);
+
+    setHistory(lastFive);
+  });
+}, []);
 
   return (
     <div style={{ textAlign: "center", padding: "2rem" }}>
@@ -93,5 +113,19 @@ useEffect(() => {
         </div>
       )}
     </div>
+
+    {history.length > 0 && (
+  <div style={{ marginTop: "2rem" }}>
+    <h3>Historial reciente:</h3>
+    <ul style={{ listStyle: "none", padding: 0 }}>
+      {history.map((item, index) => (
+        <li key={index}>
+          <strong>{item.name}</strong> —{" "}
+          {new Date(item.timestamp).toLocaleTimeString()}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
   );
 }
