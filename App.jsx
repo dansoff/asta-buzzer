@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
-import {
-  getDatabase,
-  ref,
-  set,
-  onValue,
-  push
-} from "firebase/database";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAZLWL2EhIuH7bvYlkq2k3uvTCiTl13nV8",
@@ -15,12 +9,14 @@ const firebaseConfig = {
   projectId: "buzzer-asta",
   storageBucket: "buzzer-asta.firebasestorage.app",
   messagingSenderId: "61973202498",
-  appId: "1:61973202498:web:e7c9d596cf0f9b2bfd0fdb",
-  measurementId: "G-YBE00BD0B9"
+  appId: "1:61973202498:web:e7c9d596cf0f9b2bfd0fdb"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+
+import { db } from "./firebase"; // o la ruta correcta
+import { ref, onValue, set, push } from "firebase/database";
 
 export default function App() {
   const [name, setName] = useState("");
