@@ -26,14 +26,15 @@ export default function App() {
   const [name, setName] = useState("");
   const [lastBuzz, setLastBuzz] = useState(null);
 
-  useEffect(() => {
-    const buzzRef = ref(db, "buzz/last");
-    onValue(buzzRef, (snapshot) => {
-      if (snapshot.exists()) {
-        setLastBuzz(snapshot.val());
-      }
-    });
-  }, []);
+useEffect(() => {
+  const buzzRef = ref(db, "buzz/last");
+  const unsubscribe = onValue(buzzRef, (snapshot) => {
+    if (snapshot.exists()) {
+      setLastBuzz(snapshot.val());
+    }
+  });
+  return () => unsubscribe(); // Limpieza si el componente se desmonta
+}, []);
 
   const handleBuzz = async () => {
     if (!name) return;
