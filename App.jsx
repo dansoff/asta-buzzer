@@ -28,19 +28,26 @@ export default function App() {
 
 useEffect(() => {
   const buzzRef = ref(db, "buzz/last");
+
   const unsubscribe = onValue(buzzRef, (snapshot) => {
     if (snapshot.exists()) {
       const newBuzz = snapshot.val();
-      setLastBuzz((prevBuzz) => {
-        if (!prevBuzz || prevBuzz.timestamp !== newBuzz.timestamp) {
-          // Solo reproducir si es un buzz nuevo
+
+      // Reproducir sonido si el timestamp cambió
+      setLastBuzz((prev) => {
+        if (!prev || prev.timestamp !== newBuzz.timestamp) {
           const audio = new Audio("/like.wav");
-          audio.play();
+          audio.play().catch((e) =>
+            console.log("Error al reproducir sonido:", e)
+          );
         }
         return newBuzz;
       });
     }
+  }, (error) => {
+    console.error("Error en onValue:", error);
   });
+
   return () => unsubscribe();
 }, []);
 
