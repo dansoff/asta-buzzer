@@ -15,7 +15,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-import { db } from "./firebase"; // o la ruta correcta
 import { ref, onValue, set, push } from "firebase/database";
 
 export default function App() {
