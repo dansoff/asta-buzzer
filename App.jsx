@@ -80,52 +80,51 @@ useEffect(() => {
   });
 }, []);
 
-  return (
-    <div style={{ textAlign: "center", padding: "2rem" }}>
-      <h1>Buzzer de Subasta</h1>
-      <input
-        type="text"
-        placeholder="Tu nombre"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        style={{ padding: "0.5rem", fontSize: "1rem", marginBottom: "1rem" }}
-      />
-      <br />
-      <button
-        onClick={handleBuzz}
-        style={{
-          padding: "1rem 2rem",
-          fontSize: "1.5rem",
-          background: "blue",
-          color: "white",
-          borderRadius: "1rem",
-          border: "none"
-        }}
-      >
-        BUZZ
-      </button>
+return (
+  <div style={{ textAlign: "center", padding: "2rem" }}>
+    <h1>Buzzer de Subasta</h1>
+    <input
+      type="text"
+      placeholder="Tu nombre"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      style={{ padding: "0.5rem", fontSize: "1rem", marginBottom: "1rem" }}
+    />
+    <br />
+    <button
+      onClick={handleBuzz}
+      style={{
+        padding: "1rem 2rem",
+        fontSize: "1.5rem",
+        background: "blue",
+        color: "white",
+        borderRadius: "1rem",
+        border: "none"
+      }}
+    >
+      BUZZ
+    </button>
 
-      {lastBuzz && (
-        <div style={{ marginTop: "2rem" }}>
-          <p>Último en buzzear:</p>
-          <h2>{lastBuzz.name}</h2>
-          <p>{new Date(lastBuzz.timestamp).toLocaleTimeString()}</p>
-        </div>
-      )}
-    </div>
+    {lastBuzz && (
+      <div style={{ marginTop: "2rem" }}>
+        <p>Último en buzzear:</p>
+        <h2>{lastBuzz.name}</h2>
+        <p>{new Date(lastBuzz.timestamp).toLocaleTimeString()}</p>
+      </div>
+    )}
 
     {history.length > 0 && (
-  <div style={{ marginTop: "2rem" }}>
-    <h3>Historial reciente:</h3>
-    <ul style={{ listStyle: "none", padding: 0 }}>
-      {history.map((item, index) => (
-        <li key={index}>
-          <strong>{item.name}</strong> —{" "}
-          {new Date(item.timestamp).toLocaleTimeString()}
-        </li>
-      ))}
-    </ul>
+      <div style={{ marginTop: "2rem" }}>
+        <h3>Historial reciente:</h3>
+        <ul style={{ listStyle: "none", padding: 0 }}>
+          {history.map((item, index) => (
+            <li key={index}>
+              <strong>{item.name}</strong> —{" "}
+              {new Date(item.timestamp).toLocaleTimeString()}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
   </div>
-)}
-  );
-}
+);
